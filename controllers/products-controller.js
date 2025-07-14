@@ -21,6 +21,14 @@ const createProduct = async (req, res) => {
   res.status(201).json(newProduct);
 };
 
+const updateProduct = async (req, res) => {
+  const { id } = req.params;
+
+  const { categories, name, price } = req.body;
+  const updProduct = await model.updateProduct(id, { categories, name, price });
+  res.status(200).json(updProduct);
+};
+
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
   const product = await model.deleteProduct(id);
@@ -34,4 +42,10 @@ const deleteProduct = async (req, res) => {
   });
 };
 
-export { getAllProducts, getProductById, createProduct, deleteProduct };
+export {
+  getAllProducts,
+  getProductById,
+  createProduct,
+  deleteProduct,
+  updateProduct,
+};

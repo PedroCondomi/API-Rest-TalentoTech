@@ -3,6 +3,7 @@ import {
   getProductById,
   createProduct,
   deleteProduct,
+  updateProduct,
 } from "../controllers/products-controller.js";
 import { Router } from "express";
 
@@ -17,7 +18,7 @@ router.get("/products/:id", getProductById);
 
 router.post("/products/", createProduct);
 
-// router.put("/products/:id", (req, res) => {});
+router.put("/products/:id", updateProduct);
 
 router.delete("/products/:id", deleteProduct);
 

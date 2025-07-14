@@ -6,6 +6,7 @@ import {
   doc,
   addDoc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 const productCollections = collection(db, "products");
@@ -56,15 +57,23 @@ const deleteProduct = async id => {
 };
 
 // usar setDoc con {merge: true} para que no se actualice todo
-const updateProduct = async data => {
+const updateProduct = async (id, data) => {
   try {
+    const prodRef = doc(productCollections, id);
+    const actualizado = await updateDoc(prodRef, data);
+
     // TODO chequear que toda la info necesaria esté en la req.body y sino que tire error
     // Con un MIDDLEWARE
-    const docRef = await addDoc(productCollections, data);
-    return { id: docRef.id, ...data };
+    return { id: prodRef.id, ...data };
   } catch (error) {
     console.log(error);
   }
 };
 
-export { getProductById, getAllProducts, createProduct, deleteProduct };
+export {
+  getProductById,
+  getAllProducts,
+  createProduct,
+  deleteProduct,
+  updateProduct,
+};
