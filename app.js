@@ -17,8 +17,10 @@ app.get("/", (req, res) => {
   res.send("kepasaca");
 });
 
-import productsRouter from "./routes/products-router.js";
-app.use(productsRouter);
+import * as routes from "./routes/index.js";
+app.use("/api", routes.productsRouter);
+app.use("/api", routes.authRouter);
+app.use("/api", routes.usersRouter);
 
 app.listen(PORT, () => {
   console.log(`Escuchando en puerto ${PORT}`);

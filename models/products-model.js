@@ -42,6 +42,20 @@ const createProduct = async data => {
   }
 };
 
+const updateProduct = async (id, data) => {
+  try {
+    const prodRef = doc(productCollections, id);
+    await updateDoc(prodRef, data);
+
+    // TODO chequear que toda la info necesaria esté en la req.body y sino que tire error
+    // Con un MIDDLEWARE
+
+    return { id: prodRef.id, ...data };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const deleteProduct = async id => {
   try {
     const prodRef = doc(productCollections, id);
@@ -51,20 +65,6 @@ const deleteProduct = async id => {
       return true;
     }
     return false;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// usar setDoc con {merge: true} para que no se actualice todo
-const updateProduct = async (id, data) => {
-  try {
-    const prodRef = doc(productCollections, id);
-    const actualizado = await updateDoc(prodRef, data);
-
-    // TODO chequear que toda la info necesaria esté en la req.body y sino que tire error
-    // Con un MIDDLEWARE
-    return { id: prodRef.id, ...data };
   } catch (error) {
     console.log(error);
   }
