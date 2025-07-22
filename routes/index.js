@@ -1,4 +1,4 @@
-// Index para agrupar routers y exportaciones
+// Index de routers para exportar
 
 import productsRouter from "./products-router.js";
 import authRouter from "./auth-router.js";

@@ -11,7 +11,8 @@ import { Router } from "express";
 
 const router = Router();
 
-// Rutas users
+// Rutas usuarios
+
 router.get("/users/", getAllUsers);
 router.get("/users/:id", getUserById);
 router.post(

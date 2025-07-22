@@ -9,6 +9,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
+// Modelo de los productos
 const productCollections = collection(db, "products");
 
 const getAllProducts = async () => {
@@ -33,8 +34,6 @@ const getProductById = async id => {
 
 const createProduct = async data => {
   try {
-    // TODO chequear que toda la info necesaria esté en la req.body y sino que tire error
-    // Con un MIDDLEWARE
     const docRef = await addDoc(productCollections, data);
     return { id: docRef.id, ...data };
   } catch (error) {
@@ -46,10 +45,6 @@ const updateProduct = async (id, data) => {
   try {
     const prodRef = doc(productCollections, id);
     await updateDoc(prodRef, data);
-
-    // TODO chequear que toda la info necesaria esté en la req.body y sino que tire error
-    // Con un MIDDLEWARE
-
     return { id: prodRef.id, ...data };
   } catch (error) {
     console.log(error);

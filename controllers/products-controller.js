@@ -17,6 +17,29 @@ const getProductById = async (req, res) => {
   return res.status(200).json(product);
 };
 
+const searchProducts = async (req, res) => {
+  const products = await model.getAllProducts();
+  const { name, category, price } = req.query;
+
+  const filteredProducts = products.filter(p => {
+    let existe = true;
+
+    if (name) {
+      existe = existe && p.name.toLowerCase().includes(name.toLowerCase());
+    }
+    if (category) {
+      existe =
+        existe && p.category.toLowerCase().includes(category.toLowerCase());
+    }
+    if (price) {
+      existe = existe && p.price.includes(price);
+    }
+    return existe;
+  });
+
+  return res.status(200).json({ filteredProducts });
+};
+
 const createProduct = async (req, res) => {
   const { category, name, price } = req.body;
   const newProduct = await model.createProduct({ category, name, price });
@@ -51,6 +74,7 @@ const deleteProduct = async (req, res) => {
 export {
   getAllProducts,
   getProductById,
+  searchProducts,
   createProduct,
   deleteProduct,
   updateProduct,

@@ -1,4 +1,5 @@
-// Index de middlewares
+// Index de middlewares para exportar
+
 import validarCampos from "./validar-campos.js";
 import generarJWT from "./generar-jwt.js";
 import validarJWT from "./validar-jwt.js";

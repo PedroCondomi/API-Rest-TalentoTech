@@ -12,6 +12,7 @@ import {
   query,
 } from "firebase/firestore";
 
+// Modelo de los usuarios
 const userCollections = collection(db, "users");
 
 const getAllUsers = async () => {
@@ -38,8 +39,6 @@ const createUser = async data => {
     const { password, email } = data;
     const salt = bcryptjs.genSaltSync(10);
     const hashedPassword = bcryptjs.hashSync(password, salt);
-    // TODO chequear que toda la info necesaria esté en la req.body y sino que tire error
-    // Con un MIDDLEWARE
     const userRef = await addDoc(userCollections, {
       email,
       password: hashedPassword,
@@ -54,10 +53,6 @@ const updateUser = async (id, data) => {
   try {
     const userRef = doc(userCollections, id);
     await updateDoc(userRef, data);
-
-    // TODO chequear que toda la info necesaria esté en la req.body y sino que tire error
-    // Con un MIDDLEWARE
-
     return { id: userRef.id, ...data };
   } catch (error) {
     console.log(error);

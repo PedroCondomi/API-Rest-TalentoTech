@@ -5,6 +5,8 @@ import { validarCampos } from "../middlewares/index.js";
 
 const router = Router();
 
+// Ruta de inicio de sesión
+
 router.post(
   "/auth/login",
   [
