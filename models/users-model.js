@@ -1,4 +1,5 @@
 import { db } from "./data.js";
+import bcryptjs from "bcryptjs";
 import {
   collection,
   getDocs,
@@ -34,9 +35,15 @@ const getUserById = async id => {
 
 const createUser = async data => {
   try {
+    const { password, email } = data;
+    const salt = bcryptjs.genSaltSync(10);
+    const hashedPassword = bcryptjs.hashSync(password, salt);
     // TODO chequear que toda la info necesaria esté en la req.body y sino que tire error
     // Con un MIDDLEWARE
-    const userRef = await addDoc(userCollections, data);
+    const userRef = await addDoc(userCollections, {
+      email,
+      password: hashedPassword,
+    });
     return { id: userRef.id, ...data };
   } catch (error) {
     console.log(error);

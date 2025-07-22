@@ -6,7 +6,7 @@ import {
   updateProduct,
 } from "../controllers/products-controller.js";
 import { check } from "express-validator";
-import { validarCampos } from "../middlewares/index.js";
+import { validarCampos, validarJWT } from "../middlewares/index.js";
 import { Router } from "express";
 
 const router = Router();
@@ -21,6 +21,7 @@ router.get("/products/:id", getProductById);
 router.post(
   "/products/create",
   [
+    validarJWT,
     check("name", "El nombre del producto es obligatorio").not().isEmpty(),
     check("category", "La categoría del producto es obligatoria")
       .not()
@@ -37,6 +38,7 @@ router.post(
 router.put(
   "/products/:id",
   [
+    validarJWT,
     check(
       "price",
       "El precio del producto debe ser un número entero"
@@ -44,6 +46,6 @@ router.put(
   ],
   updateProduct
 );
-router.delete("/products/:id", deleteProduct);
+router.delete("/products/:id", [validarJWT], deleteProduct);
 
 export default router;

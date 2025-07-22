@@ -6,7 +6,7 @@ import {
   deleteUser,
 } from "../controllers/users-controller.js";
 import { check } from "express-validator";
-import { validarCampos } from "../middlewares/index.js";
+import { validarCampos, validarJWT } from "../middlewares/index.js";
 import { Router } from "express";
 
 const router = Router();
@@ -15,8 +15,9 @@ const router = Router();
 router.get("/users/", getAllUsers);
 router.get("/users/:id", getUserById);
 router.post(
-  "/users/",
+  "/users/create",
   [
+    validarJWT,
     check("email", "El correo es obligatorio y con formato válido")
       .isEmail()
       .not()
@@ -26,14 +27,16 @@ router.post(
   ],
   createUser
 );
+
 router.put(
   "/users/:id",
   [
+    validarJWT,
     check("email", "El correo debe tener un formato válido").isEmail(),
     validarCampos,
   ],
   updateUser
 );
-router.delete("/users/:id", deleteUser);
+router.delete("/users/:id", [validarJWT], deleteUser);
 
 export default router;
