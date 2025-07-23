@@ -41,8 +41,13 @@ const searchProducts = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  const { category, name, price } = req.body;
-  const newProduct = await model.createProduct({ category, name, price });
+  const { category, name, price, description } = req.body;
+  const newProduct = await model.createProduct({
+    category,
+    name,
+    price,
+    description,
+  });
   return res
     .status(201)
     .json({ msg: "Producto añadido con éxito", newProduct });
@@ -51,8 +56,13 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   const { id } = req.params;
 
-  const { category, name, price } = req.body;
-  const updProduct = await model.updateProduct(id, { category, name, price });
+  const { category, name, price, description } = req.body;
+  const updProduct = await model.updateProduct(id, {
+    category,
+    name,
+    price,
+    description,
+  });
   return res
     .status(200)
     .json({ msg: "Producto actualizado correctamente", ...updProduct });
