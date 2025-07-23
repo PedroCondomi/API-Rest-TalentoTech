@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("kepasaca");
+  res.json({ Message: "Bienvenido a la API REST" });
 });
 
 import * as routes from "./routes/index.js";
